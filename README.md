@@ -25,10 +25,10 @@
 
 | Key | Description |
 | --- | --- |
-| `accessory` | Must be `GarageDoorOpener` |
+| `accessory` | Must be `HTTPLock` |
 | `name` | Name to appear in the Home app |
-| `openURL` | URL to trigger the opening of your garage |
-| `closeURL` | URL to trigger the closing of your garage |
+| `openURL` | URL to trigger unlock |
+| `closeURL` | URL to trigger lock |
 | `autoLock` _(optional)_ | Whether your lock should re-lock after being opened (default `false`) |
 | `autoLockDelay` _(optional)_ | Time (in seconds) until your lock will auto lock if enabled (default is `10`) |
 | `timeout` _(optional)_ | Time (in milliseconds) until the accessory will be marked as "Not Responding" if it is unreachable (`5000` is default) |
