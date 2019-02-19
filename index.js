@@ -4,7 +4,7 @@ var request = require("request");
 module.exports = function(homebridge){
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory("homebridge-http-lock", "HTTPLock", HTTPLock);
+  homebridge.registerAccessory("homebridge-http-lock-mechanism", "HTTPLock", HTTPLock);
 };
 
 function HTTPLock(log, config) {
