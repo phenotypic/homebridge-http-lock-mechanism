@@ -35,7 +35,7 @@ function HTTPLock(log, config) {
 
   this.log(this.name);
 
-	this.service = new Service.HTTPLock(this.name);
+	this.service = new Service.LockMechanism(this.name);
 }
 
 HTTPLock.prototype = {
@@ -67,33 +67,27 @@ HTTPLock.prototype = {
           this.log("[!] Error setting LockTargetState: %s", error.message);
 					callback(error);
         } else {
-          this.log("[+] Setting LockTargetState to %s", value);
           if (value == 1) {
-            this.log("[*] Started closing");
-            this.simulateClose();
+            this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
+            this.log("[*] Closed the lock");
           } else {
-            this.log("[*] Started opening");
-            this.simulateOpen();
+            this.log("[*] Opened the lock");
+            this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED);
+            if (this.autoLock) {
+              this.autoLockFunction();
+            }
           }
           callback();
         }
     }.bind(this));
   },
 
-  simulateOpen: function() {
-    this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.OPENING);
+  autoLockFunction: function() {
+    this.log("[+] Waiting %s seconds for autolock", this.autoLockDelay);
     setTimeout(() => {
-      this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.OPEN);
-      this.log("[*] Finished opening");
-    }, this.openTime * 1000);
-  },
-
-  simulateClose: function() {
-    this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.CLOSING);
-    setTimeout(() => {
-      this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
-      this.log("[*] Finished opening");
-    }, this.closeTime * 1000);
+      this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED);
+      this.log("[*] Autolocking");
+    }, this.autoLockDelay * 1000);
   },
 
 	getName: function(callback) {
