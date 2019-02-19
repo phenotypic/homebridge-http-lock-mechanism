@@ -1,0 +1,29 @@
+{
+  "name": "homebridge-http-lock",
+  "version": "1.0.0",
+  "description": "Homebridge plugin to control a web-based lock",
+  "main": "index.js",
+  "engines": {
+    "homebridge": "^0.4.46",
+    "node": "^10.0.0"
+  },
+  "dependencies": {
+    "request": "^2.65.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tommrodrigues/homebridge-http-lock.git"
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "author": "Tom Rodrigues <tommyrodrigues2001@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tommrodrigues/homebridge-http-lock/issues"
+  },
+  "homepage": "https://github.com/Tommrodrigues/homebridge-http-lock#readme"
+}
