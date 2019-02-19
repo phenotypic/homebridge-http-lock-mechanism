@@ -1,4 +1,4 @@
-# homebridge-http-lock
+# homebridge-http-lock-mechanism
 
 #### Homebridge plugin to control a web-based lock
 
@@ -42,5 +42,5 @@
 ## Removal
 
 ```
-sudo npm uninstall -g homebridge-http-lock
+sudo npm uninstall -g homebridge-http-lock-mechanism
 ```
