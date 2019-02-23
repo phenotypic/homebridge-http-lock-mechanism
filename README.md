@@ -4,7 +4,7 @@
 
 ## Description
 
-homebridge-http-lock-mechanism exposes a garage to HomeKit and makes it controllable via simple HTTP requests.
+homebridge-http-lock-mechanism exposes a lock to HomeKit, and makes it controllable via simple HTTP requests.
 
 ## Installation
 
