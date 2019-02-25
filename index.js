@@ -12,7 +12,7 @@ function HTTPLock(log, config) {
 
   this.name = config.name;
   this.manufacturer = config.manufacturer || 'HTTP Manufacturer';
-  this.model = config.model || 'homebridge-http-garage';
+  this.model = config.model || 'homebridge-http-lock-mechanism';
   this.serial = config.serial || 'HTTP Serial Number';
 
   this.username = config.username || null;
