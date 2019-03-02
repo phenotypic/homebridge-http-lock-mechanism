@@ -1,19 +1,20 @@
 var Service, Characteristic;
-var request = require("request");
+var request = require('request');
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory("homebridge-http-lock-mechanism", "HTTPLock", HTTPLock);
+  homebridge.registerAccessory('homebridge-http-lock-mechanism', 'HTTPLock', HTTPLock);
 };
 
 function HTTPLock(log, config) {
   this.log = log;
 
   this.name = config.name;
-  this.manufacturer = config.manufacturer || 'HTTP Manufacturer';
+
+  this.manufacturer = config.manufacturer || 'Tom Rodrigues';
+  this.serial = config.serial;
   this.model = config.model || 'homebridge-http-lock-mechanism';
-  this.serial = config.serial || 'HTTP Serial Number';
 
   this.username = config.username || null;
   this.password = config.password || null;
@@ -41,7 +42,7 @@ function HTTPLock(log, config) {
 HTTPLock.prototype = {
 
   identify: function(callback) {
-    this.log("Identify requested!");
+    this.log('Identify requested!');
     callback();
   },
 
@@ -60,22 +61,22 @@ HTTPLock.prototype = {
   },
 
   setLockTargetState: function(value, callback) {
-    this.log("[+] Setting LockTargetState to %s", value);
-    if (value == 1) {
+    this.log('[+] Setting LockTargetState to %s', value);
+    if (value === 1) {
       url = this.closeURL;
     } else {
       url = this.openURL;
     }
     this._httpRequest(url, '', this.http_method, function(error, response, responseBody) {
       if (error) {
-        this.log("[!] Error setting LockTargetState: %s", error.message);
+        this.log('[!] Error setting LockTargetState: %s', error.message);
         callback(error);
       } else {
-        if (value == 1) {
+        if (value === 1) {
           this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
-          this.log("[*] Closed the lock");
+          this.log('[*] Closed the lock');
         } else {
-          this.log("[*] Opened the lock");
+          this.log('[*] Opened the lock');
           this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED);
           if (this.autoLock) {
             this.autoLockFunction();
@@ -87,7 +88,7 @@ HTTPLock.prototype = {
   },
 
   autoLockFunction: function() {
-    this.log("[+] Waiting %s seconds for autolock", this.autoLockDelay);
+    this.log('[+] Waiting %s seconds for autolock', this.autoLockDelay);
     setTimeout(() => {
       this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED);
       this.log("[*] Autolocking");
