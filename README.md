@@ -46,6 +46,6 @@ homebridge-http-lock-mechanism exposes a lock to HomeKit, and makes it controlla
 | `http_method` _(optional)_ | The HTTP method used to communicate with the lock | `GET` |
 | `username` _(optional)_ | Username if HTTP authentication is enabled | N/A |
 | `password` _(optional)_ | Password if HTTP authentication is enabled | N/A |
-| `model` _(optional)_ | Appears under "Model" for your accessory in the Home app | `homebridge-http-lock-mechanism` |
-| `serial` _(optional)_ | Appears under "Serial" for your accessory in the Home app | `HTTP Serial Number` |
-| `manufacturer` _(optional)_ | Appears under "Manufacturer" for your accessory in the Home app | `HTTP Manufacturer` |
+| `model` _(optional)_ | Appears under the "Model" field for the device | `homebridge-http-lock-mechanism` |
+| `serial` _(optional)_ | Appears under the "Serial" field for the device | N/A |
+| `manufacturer` _(optional)_ | Appears under the "Manufacturer" field for the device | `Tom Rodrigues` |
