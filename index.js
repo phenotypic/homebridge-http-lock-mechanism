@@ -91,7 +91,7 @@ HTTPLock.prototype = {
     this.log('[+] Waiting %s seconds for autolock', this.autoLockDelay);
     setTimeout(() => {
       this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED);
-      this.log("[*] Autolocking");
+      this.log('[*] Autolocking');
     }, this.autoLockDelay * 1000);
   },
 
