@@ -4,7 +4,7 @@
 
 ## Description
 
-This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based locking device to to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests, you can turn lock/unlock the device.
+This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based locking device to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests, you can turn lock/unlock the device.
 
 ## Installation
 
