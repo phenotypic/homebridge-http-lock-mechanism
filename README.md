@@ -1,10 +1,10 @@
 # homebridge-http-lock-mechanism
 
-#### Homebridge plugin to control a web-based lock
+[![npm](https://img.shields.io/npm/dt/homebridge-http-lock-mechanism.svg)](https://www.npmjs.com/package/homebridge-http-lock-mechanism) [![npm](https://img.shields.io/npm/v/homebridge-http-lock-mechanism.svg)](https://www.npmjs.com/package/homebridge-http-lock-mechanism)
 
 ## Description
 
-homebridge-http-lock-mechanism exposes a lock to HomeKit, and makes it controllable via simple HTTP requests.
+This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based locking device to to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests, you can turn lock/unlock the device.
 
 ## Installation
 
