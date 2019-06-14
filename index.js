@@ -1,5 +1,6 @@
 var Service, Characteristic;
-var request = require('request');
+const request = require('request');
+const packageJson = require('./package.json')
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -12,9 +13,10 @@ function HTTPLock(log, config) {
 
   this.name = config.name;
 
-  this.manufacturer = config.manufacturer || 'Tom Rodrigues';
-  this.serial = config.serial;
-  this.model = config.model || 'homebridge-http-lock-mechanism';
+  this.manufacturer = config.manufacturer || packageJson.author.name;
+  this.serial = config.serial || packageJson.version;
+  this.model = config.model || packageJson.name;
+  this.firmware = config.firmware || packageJson.version;
 
   this.username = config.username || null;
   this.password = config.password || null;
@@ -104,7 +106,8 @@ HTTPLock.prototype = {
     this.informationService
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
       .setCharacteristic(Characteristic.Model, this.model)
-      .setCharacteristic(Characteristic.SerialNumber, this.serial);
+      .setCharacteristic(Characteristic.SerialNumber, this.serial)
+      .setCharacteristic(Characteristic.FirmwareRevision, this.firmware);
 
     this.service
       .getCharacteristic(Characteristic.LockTargetState)
