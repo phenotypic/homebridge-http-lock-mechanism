@@ -1,118 +1,118 @@
-var Service, Characteristic;
-const request = require('request');
+var Service, Characteristic
+const request = require('request')
 const packageJson = require('./package.json')
 
-module.exports = function(homebridge) {
-  Service = homebridge.hap.Service;
-  Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory('homebridge-http-lock-mechanism', 'HTTPLock', HTTPLock);
-};
+module.exports = function (homebridge) {
+  Service = homebridge.hap.Service
+  Characteristic = homebridge.hap.Characteristic
+  homebridge.registerAccessory('homebridge-http-lock-mechanism', 'HTTPLock', HTTPLock)
+}
 
-function HTTPLock(log, config) {
-  this.log = log;
+function HTTPLock (log, config) {
+  this.log = log
 
-  this.name = config.name;
+  this.name = config.name
 
-  this.manufacturer = config.manufacturer || packageJson.author.name;
-  this.serial = config.serial || packageJson.version;
-  this.model = config.model || packageJson.name;
-  this.firmware = config.firmware || packageJson.version;
+  this.manufacturer = config.manufacturer || packageJson.author.name
+  this.serial = config.serial || packageJson.version
+  this.model = config.model || packageJson.name
+  this.firmware = config.firmware || packageJson.version
 
-  this.username = config.username || null;
-  this.password = config.password || null;
-  this.timeout = config.timeout || 3000;
-  this.http_method = config.http_method || 'GET';
+  this.username = config.username || null
+  this.password = config.password || null
+  this.timeout = config.timeout || 3000
+  this.http_method = config.http_method || 'GET'
 
-  this.openURL = config.openURL;
-  this.closeURL = config.closeURL;
+  this.openURL = config.openURL
+  this.closeURL = config.closeURL
 
-  this.autoLock = config.autoLock || false;
-  this.autoLockDelay = config.autoLockDelay || 10;
+  this.autoLock = config.autoLock || false
+  this.autoLockDelay = config.autoLockDelay || 10
 
   if (this.username != null && this.password != null) {
     this.auth = {
       user: this.username,
       pass: this.password
-    };
+    }
   }
 
-  this.log(this.name);
+  this.log(this.name)
 
-  this.service = new Service.LockMechanism(this.name);
+  this.service = new Service.LockMechanism(this.name)
 }
 
 HTTPLock.prototype = {
 
-  identify: function(callback) {
-    this.log('Identify requested!');
-    callback();
+  identify: function (callback) {
+    this.log('Identify requested!')
+    callback()
   },
 
-  _httpRequest: function(url, body, method, callback) {
+  _httpRequest: function (url, body, method, callback) {
     request({
-        url: url,
-        body: body,
-        method: this.http_method,
-        timeout: this.timeout,
-        rejectUnauthorized: false,
-        auth: this.auth
-      },
-      function(error, response, body) {
-        callback(error, response, body);
-      });
+      url: url,
+      body: body,
+      method: this.http_method,
+      timeout: this.timeout,
+      rejectUnauthorized: false,
+      auth: this.auth
+    },
+    function (error, response, body) {
+      callback(error, response, body)
+    })
   },
 
-  setLockTargetState: function(value, callback) {
-    this.log('[+] Setting LockTargetState to %s', value);
+  setLockTargetState: function (value, callback) {
+    var url
+    this.log('[+] Setting LockTargetState to %s', value)
     if (value === 1) {
-      url = this.closeURL;
+      url = this.closeURL
     } else {
-      url = this.openURL;
+      url = this.openURL
     }
-    this._httpRequest(url, '', this.http_method, function(error, response, responseBody) {
+    this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
       if (error) {
-        this.log('[!] Error setting LockTargetState: %s', error.message);
-        callback(error);
+        this.log('[!] Error setting LockTargetState: %s', error.message)
+        callback(error)
       } else {
         if (value === 1) {
-          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
-          this.log('[*] Closed the lock');
+          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)
+          this.log('[*] Closed the lock')
         } else {
-          this.log('[*] Opened the lock');
-          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED);
+          this.log('[*] Opened the lock')
+          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED)
           if (this.autoLock) {
-            this.autoLockFunction();
+            this.autoLockFunction()
           }
         }
-        callback();
+        callback()
       }
-    }.bind(this));
+    }.bind(this))
   },
 
-  autoLockFunction: function() {
-    this.log('[+] Waiting %s seconds for autolock', this.autoLockDelay);
+  autoLockFunction: function () {
+    this.log('[+] Waiting %s seconds for autolock', this.autoLockDelay)
     setTimeout(() => {
-      this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED);
-      this.log('[*] Autolocking');
-    }, this.autoLockDelay * 1000);
+      this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+      this.log('[*] Autolocking')
+    }, this.autoLockDelay * 1000)
   },
 
-  getServices: function() {
+  getServices: function () {
+    this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)
+    this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
 
-    this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
-    this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED);
-
-    this.informationService = new Service.AccessoryInformation();
+    this.informationService = new Service.AccessoryInformation()
     this.informationService
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
       .setCharacteristic(Characteristic.Model, this.model)
       .setCharacteristic(Characteristic.SerialNumber, this.serial)
-      .setCharacteristic(Characteristic.FirmwareRevision, this.firmware);
+      .setCharacteristic(Characteristic.FirmwareRevision, this.firmware)
 
     this.service
       .getCharacteristic(Characteristic.LockTargetState)
-      .on('set', this.setLockTargetState.bind(this));
+      .on('set', this.setLockTargetState.bind(this))
 
-    return [this.informationService, this.service];
+    return [this.informationService, this.service]
   }
-};
+}
