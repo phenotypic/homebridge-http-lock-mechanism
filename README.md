@@ -2,6 +2,10 @@
 
 [![npm](https://img.shields.io/npm/v/homebridge-http-lock-mechanism.svg)](https://www.npmjs.com/package/homebridge-http-lock-mechanism) [![npm](https://img.shields.io/npm/dt/homebridge-http-lock-mechanism.svg)](https://www.npmjs.com/package/homebridge-http-lock-mechanism)
 
+## _NOTE_
+
+**This plugin provides no way to get the real state of the device. Please look at [homebridge-web-lock](https://github.com/Tommrodrigues/homebridge-web-lock) if you want a plugin that allows for real-time updates.**
+
 ## Description
 
 This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based locking device to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests, the plugin allows you to lock/unlock the device.
