@@ -36,7 +36,7 @@ function HTTPLock (log, config) {
     }
   }
 
-  this.log(this.name)
+  this.log('%s initialized', this.name)
 
   this.service = new Service.LockMechanism(this.name)
 }
@@ -72,7 +72,7 @@ HTTPLock.prototype = {
     }
     this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
       if (error) {
-        this.log('[!] Error setting LockTargetState: %s', error.message)
+        this.log.warn('[!] Error setting LockTargetState: %s', error.message)
         callback(error)
       } else {
         if (value === 1) {
