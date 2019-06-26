@@ -36,8 +36,6 @@ function HTTPLock (log, config) {
     }
   }
 
-  this.log('%s initialized', this.name)
-
   this.service = new Service.LockMechanism(this.name)
 }
 
@@ -64,7 +62,7 @@ HTTPLock.prototype = {
 
   setLockTargetState: function (value, callback) {
     var url
-    this.log('[+] Setting LockTargetState to %s', value)
+    this.log('Setting LockTargetState to %s', value)
     if (value === 1) {
       url = this.closeURL
     } else {
@@ -72,14 +70,14 @@ HTTPLock.prototype = {
     }
     this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
       if (error) {
-        this.log.warn('[!] Error setting LockTargetState: %s', error.message)
+        this.log.warn('Error setting LockTargetState: %s', error.message)
         callback(error)
       } else {
         if (value === 1) {
           this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)
-          this.log('[*] Closed the lock')
+          this.log('Closed the lock')
         } else {
-          this.log('[*] Opened the lock')
+          this.log('Opened the lock')
           this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED)
           if (this.autoLock) {
             this.autoLockFunction()
@@ -91,10 +89,10 @@ HTTPLock.prototype = {
   },
 
   autoLockFunction: function () {
-    this.log('[+] Waiting %s seconds for autolock', this.autoLockDelay)
+    this.log('Waiting %s seconds for autolock', this.autoLockDelay)
     setTimeout(() => {
       this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
-      this.log('[*] Autolocking')
+      this.log('Autolocking...')
     }, this.autoLockDelay * 1000)
   },
 
