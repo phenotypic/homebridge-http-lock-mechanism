@@ -1,6 +1,6 @@
 var Service, Characteristic
-const request = require('request')
 const packageJson = require('./package.json')
+const request = require('request')
 
 module.exports = function (homebridge) {
   Service = homebridge.hap.Service
@@ -12,6 +12,12 @@ function HTTPLock (log, config) {
   this.log = log
 
   this.name = config.name
+  
+  this.openURL = config.openURL
+  this.closeURL = config.closeURL
+
+  this.autoLock = config.autoLock || false
+  this.autoLockDelay = config.autoLockDelay || 10
 
   this.manufacturer = config.manufacturer || packageJson.author.name
   this.serial = config.serial || packageJson.version
@@ -22,12 +28,6 @@ function HTTPLock (log, config) {
   this.password = config.password || null
   this.timeout = config.timeout || 3000
   this.http_method = config.http_method || 'GET'
-
-  this.openURL = config.openURL
-  this.closeURL = config.closeURL
-
-  this.autoLock = config.autoLock || false
-  this.autoLockDelay = config.autoLockDelay || 10
 
   if (this.username != null && this.password != null) {
     this.auth = {
