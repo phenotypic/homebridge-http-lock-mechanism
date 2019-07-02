@@ -36,6 +36,8 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
 ### Optional fields
 | Key | Description | Default |
 | --- | --- | --- |
+| `openTime` _(optional)_ | Time (in seconds) to simulate your lock opening | `1` |
+| `closeTime` _(optional)_ | Time (in seconds) to simulate your lock closing | `1` |
 | `autoLock` _(optional)_ | Whether your lock should re-lock after being opened | `false` |
 | `autoLockDelay` _(optional)_ | Time (in seconds) until your lock will auto lock if enabled | `10` |
 
