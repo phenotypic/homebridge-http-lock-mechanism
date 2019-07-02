@@ -12,9 +12,12 @@ function HTTPLock (log, config) {
   this.log = log
 
   this.name = config.name
-  
+
   this.openURL = config.openURL
   this.closeURL = config.closeURL
+
+  this.openTime = config.openTime || 1
+  this.closeTime = config.closeTime || 1
 
   this.autoLock = config.autoLock || false
   this.autoLockDelay = config.autoLockDelay || 10
@@ -74,11 +77,11 @@ HTTPLock.prototype = {
         callback(error)
       } else {
         if (value === 1) {
-          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)
-          this.log('Closed the lock')
+          this.log('Closing the lock')
+          this.simulateClose()
         } else {
-          this.log('Opened the lock')
-          this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED)
+          this.log('Opening the lock')
+          this.simulateOpen()
           if (this.autoLock) {
             this.autoLockFunction()
           }
@@ -88,17 +91,31 @@ HTTPLock.prototype = {
     }.bind(this))
   },
 
+  simulateOpen: function () {
+    setTimeout(() => {
+      this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(0)
+      this.log('Finished opening')
+    }, this.openTime * 1000)
+  },
+
+  simulateClose: function () {
+    setTimeout(() => {
+      this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
+      this.log('Finished closing')
+    }, this.closeTime * 1000)
+  },
+
   autoLockFunction: function () {
     this.log('Waiting %s seconds for autolock', this.autoLockDelay)
     setTimeout(() => {
-      this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+      this.service.setCharacteristic(Characteristic.LockTargetState, 1)
       this.log('Autolocking...')
     }, this.autoLockDelay * 1000)
   },
 
   getServices: function () {
-    this.service.setCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED)
-    this.service.setCharacteristic(Characteristic.LockTargetState, Characteristic.LockTargetState.SECURED)
+    this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
+    this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(1)
 
     this.informationService = new Service.AccessoryInformation()
     this.informationService
