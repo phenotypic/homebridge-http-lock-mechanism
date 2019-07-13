@@ -65,7 +65,7 @@ HTTPLock.prototype = {
 
   setLockTargetState: function (value, callback) {
     var url
-    this.log('Setting LockTargetState to %s', value)
+    this.log.debug('Setting LockTargetState to %s', value)
     if (value === 1) {
       url = this.closeURL
     } else {
