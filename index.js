@@ -32,6 +32,10 @@ function HTTPLock (log, config) {
   this.timeout = config.timeout || 3000
   this.http_method = config.http_method || 'GET'
 
+  this.polling = config.polling || false
+  this.pollInterval = config.pollInterval || 120
+  this.statusURL = config.statusURL
+
   if (this.username != null && this.password != null) {
     this.auth = {
       user: this.username,
@@ -61,6 +65,23 @@ HTTPLock.prototype = {
     function (error, response, body) {
       callback(error, response, body)
     })
+  },
+
+  _getStatus: function (callback) {
+    var url = this.statusURL
+    this.log.debug('Getting status: %s', url)
+
+    this._httpRequest(url, '', 'GET', function (error, response, responseBody) {
+      if (error) {
+        this.log.warn('Error getting status: %s', error.message)
+        this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(new Error('Polling failed'))
+        callback(error)
+      } else {
+        this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(responseBody)
+        this.log('Updated state to: %s', responseBody)
+        callback()
+      }
+    }.bind(this))
   },
 
   setLockTargetState: function (value, callback) {
@@ -127,6 +148,14 @@ HTTPLock.prototype = {
     this.service
       .getCharacteristic(Characteristic.LockTargetState)
       .on('set', this.setLockTargetState.bind(this))
+
+    if (this.polling) {
+      this._getStatus(function () {})
+
+      setInterval(function () {
+        this._getStatus(function () {})
+      }.bind(this), this.pollInterval * 1000)
+    }
 
     return [this.informationService, this.service]
   }
