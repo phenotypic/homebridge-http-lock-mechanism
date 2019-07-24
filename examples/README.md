@@ -39,3 +39,7 @@ npm install -g homebridge-http-lock-mechanism
 ## Wiring
 
 ![Diagram](https://i.ibb.co/Jrzr2Hm/68747470733a2f2f696d6167652e6962622e636f2f68454468464c2f576972696e672d52656c61792d4469616772616d2e6a7067.jpg)
+
+## Note
+
+This example script will open any time your `key` is requested. Therefore, anyone on your network who knows the key can activate the script. Acquiring the key is trivial once inside your network by running a simple Wireshark scan. As such, the 'security' of this script **relies entirely on your network security** (e.g. the strength of your Wi-Fi password).
