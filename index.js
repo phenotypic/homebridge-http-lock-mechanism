@@ -16,9 +16,6 @@ function HTTPLock (log, config) {
   this.openURL = config.openURL
   this.closeURL = config.closeURL
 
-  this.openTime = config.openTime || 1
-  this.closeTime = config.closeTime || 1
-
   this.autoLock = config.autoLock || false
   this.autoLockDelay = config.autoLockDelay || 10
 
@@ -98,11 +95,11 @@ HTTPLock.prototype = {
         callback(error)
       } else {
         if (value === 1) {
-          this.log('Closing the lock')
-          this.simulateClose()
+          this.log('Closed the lock')
+          this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
         } else {
-          this.log('Opening the lock')
-          this.simulateOpen()
+          this.log('Opened the lock')
+          this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(0)
           if (this.autoLock) {
             this.autoLockFunction()
           }
@@ -110,20 +107,6 @@ HTTPLock.prototype = {
         callback()
       }
     }.bind(this))
-  },
-
-  simulateOpen: function () {
-    setTimeout(() => {
-      this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(0)
-      this.log('Finished opening')
-    }, this.openTime * 1000)
-  },
-
-  simulateClose: function () {
-    setTimeout(() => {
-      this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
-      this.log('Finished closing')
-    }, this.closeTime * 1000)
   },
 
   autoLockFunction: function () {
