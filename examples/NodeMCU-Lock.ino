@@ -20,7 +20,7 @@ const int momentaryOn = 1000; //Delay time for the on state (ms)
 const int relayPin = 13;
 
 int relayOn, relayOff;
-int state = 0;
+int state = 1;
 
 WiFiServer server(80);
 
@@ -98,19 +98,19 @@ void loop() {
     digitalWrite(relayPin, relayOn);
     delay(momentaryOn);
     digitalWrite(relayPin, relayOff);
-    state = 0;
+    state = 1;
   }
 
   if (request.indexOf(onKey) != -1)  {
     digitalWrite(relayPin, relayOn);
     delay(momentaryOn);
     digitalWrite(relayPin, relayOff);
-    state = 1;
+    state = 0;
   }
 
 
   if (request.indexOf("/status") != -1)  {
-    client.println(String(state));
+    client.print(String(state));
   }
 
   delay(1);
