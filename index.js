@@ -75,6 +75,7 @@ HTTPLock.prototype = {
         callback(error)
       } else {
         this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(responseBody)
+        this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(responseBody)
         this.log('Updated state to: %s', responseBody)
         callback()
       }
