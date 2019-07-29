@@ -118,9 +118,6 @@ HTTPLock.prototype = {
   },
 
   getServices: function () {
-    this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
-    this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(1)
-
     this.informationService = new Service.AccessoryInformation()
     this.informationService
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
@@ -138,6 +135,9 @@ HTTPLock.prototype = {
       setInterval(function () {
         this._getStatus(function () {})
       }.bind(this), this.pollInterval * 1000)
+    } else {
+      this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
+      this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(1)
     }
 
     return [this.informationService, this.service]
