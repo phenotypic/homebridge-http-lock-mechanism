@@ -56,7 +56,7 @@ Find script samples for the lock in the _examples_ folder.
 | `manufacturer` _(optional)_ | Appears under the _Manufacturer_ field for the accessory | author |
 | `firmware` _(optional)_ | Appears under the _Firmware_ field for the accessory | version |
 
-### State key
+## State key
 | State | Description |
 | --- | --- |
 | `0` | Open |
