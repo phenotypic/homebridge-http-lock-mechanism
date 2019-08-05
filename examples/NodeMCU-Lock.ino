@@ -8,13 +8,13 @@
 // D7 = Relay
 
 /////////////////// CHANGE THESE VALUES //////////////////////
-const char* ssid = "SSID"; //Name of your network
-const char* password = "PASSWORD"; //Password for your network
-const char* relay = "HIGH"; //Relay type (`HIGH` or `LOW`)
-const char* mdns = "lock"; //mDNS name
-const char* onKey = "/SECRETKEY"; //e.g. "/NjWymLQzyd3PPp9N"
-const char* offKey = "/SECRETKEY"; //e.g. "/f3gZbxREJYFKRmz6"
-const int momentaryOn = 1000; //Delay time for the on state (ms)
+const char* ssid = "SSID"; // Name of your network
+const char* password = "PASSWORD"; // Password for your network
+const String relay = "HIGH"; // Relay type (`HIGH` or `LOW`)
+const char* mdns = "lock"; // mDNS name
+const char* onKey = "/SECRETKEY"; // e.g. "/NjWymLQzyd3PPp9N"
+const char* offKey = "/SECRETKEY"; // e.g. "/f3gZbxREJYFKRmz6"
+const int momentaryOn = 1000; // Delay time for the on state (ms)
 //////////////////////////////////////////////////////////////
 
 const int relayPin = 13;
@@ -25,10 +25,7 @@ int state = 1;
 WiFiServer server(80);
 
 void setup() {
-  Serial.begin(115200);
-  delay(10);
-
-  if (relay == "LOW") {
+  if (relay.equals("LOW")) {
     relayOn = 0;
     relayOff = 1;
   } else {
@@ -38,6 +35,9 @@ void setup() {
 
   pinMode(relayPin, OUTPUT);
   digitalWrite(relayPin, relayOff);
+
+  Serial.begin(115200);
+  delay(10);
 
   // Connect to WiFi network
   Serial.println();
