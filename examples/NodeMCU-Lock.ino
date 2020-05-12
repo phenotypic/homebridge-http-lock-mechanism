@@ -77,6 +77,8 @@ void setup() {
   }
   Serial.println("mDNS address: " + String(mdns) + ".local");
 
+  server.setServerKeyAndCert_P(rsakey, sizeof(rsakey), x509, sizeof(x509));
+
   server.on("/setState", []() {
     if (server.authenticate(www_username, www_password)) {
       state = server.arg("value").toInt();
