@@ -40,8 +40,7 @@ Find script samples for the lock in the _examples_ folder.
 | --- | --- | --- |
 | `accessory` | Must be `HTTPLock` | N/A |
 | `name` | Name to appear in the Home app | N/A |
-| `openURL` | URL to trigger unlock | N/A |
-| `closeURL` | URL to trigger lock | N/A |
+| `apiroute` | Root URL of your device | N/A |
 
 ### Optional fields
 | Key | Description | Default |
@@ -63,6 +62,22 @@ Find script samples for the lock in the _examples_ folder.
 | `serial` _(optional)_ | Appears under the _Serial_ field for the accessory | version |
 | `manufacturer` _(optional)_ | Appears under the _Manufacturer_ field for the accessory | author |
 | `firmware` _(optional)_ | Appears under the _Firmware_ field for the accessory | version |
+
+## API Interfacing
+
+Your API should be able to:
+
+1. Return JSON information when it receives `/status`:
+```
+{
+    "currentState": INT_VALUE
+}
+```
+
+2. Set the state when it receives:
+```
+/setState?value=INT_VALUE
+```
 
 ## State key
 | State | Description |
