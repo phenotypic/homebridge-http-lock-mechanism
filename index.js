@@ -29,7 +29,6 @@ function HTTPLock (log, config) {
 
   this.polling = config.polling || false
   this.pollInterval = config.pollInterval || 120
-  this.statusURL = config.statusURL
 
   if (this.username != null && this.password != null) {
     this.auth = {
