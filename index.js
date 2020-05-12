@@ -18,7 +18,7 @@ function HTTPLock (log, config) {
   this.autoLockDelay = config.autoLockDelay || 10
 
   this.manufacturer = config.manufacturer || packageJson.author.name
-  this.serial = config.serial || packageJson.version
+  this.serial = config.serial || this.apiroute
   this.model = config.model || packageJson.name
   this.firmware = config.firmware || packageJson.version
 
