@@ -12,9 +12,7 @@ function HTTPLock (log, config) {
   this.log = log
 
   this.name = config.name
-
-  this.openURL = config.openURL
-  this.closeURL = config.closeURL
+  this.apiroute = config.apiroute
 
   this.autoLock = config.autoLock || false
   this.autoLockDelay = config.autoLockDelay || 10
@@ -65,7 +63,7 @@ HTTPLock.prototype = {
   },
 
   _getStatus: function (callback) {
-    var url = this.statusURL
+    var url = this.apiroute + '/status'
     this.log.debug('Getting status: %s', url)
 
     this._httpRequest(url, '', 'GET', function (error, response, responseBody) {
@@ -74,36 +72,29 @@ HTTPLock.prototype = {
         this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(new Error('Polling failed'))
         callback(error)
       } else {
-        this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(responseBody)
-        this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(responseBody)
-        this.log.debug('Updated state to: %s', responseBody)
+        this.log.debug('Device response: %s', responseBody)
+        var json = JSON.parse(responseBody)
+        this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(json.currentState)
+        this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(json.currentState)
+        this.log.debug('Updated state to: %s', json.currentState)
         callback()
       }
     }.bind(this))
   },
 
   setLockTargetState: function (value, callback) {
-    var url
-    this.log.debug('Setting LockTargetState to %s', value)
-    if (value === 1) {
-      url = this.closeURL
-    } else {
-      url = this.openURL
-    }
+    var url = this.apiroute + '/setState?value=' + value
+    this.log.debug('Setting state: %s', url)
+
     this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
       if (error) {
-        this.log.warn('Error setting LockTargetState: %s', error.message)
+        this.log.warn('Error setting state: %s', error.message)
         callback(error)
       } else {
-        if (value === 1) {
-          this.log('Closed the lock')
-          this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
-        } else {
-          this.log('Opened the lock')
-          this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(0)
-          if (this.autoLock) {
-            this.autoLockFunction()
-          }
+        this.log('Set state to %s', value)
+        this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(value)
+        if (value === 1 && this.autoLock) {
+          this.autoLockFunction()
         }
         callback()
       }
