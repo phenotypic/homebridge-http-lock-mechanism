@@ -14,7 +14,7 @@ This script interfaces with [homebridge](https://github.com/nfarina/homebridge) 
 
 ## How-to
 
-1. First, follow [this](https://gist.github.com/Tommrodrigues/8d9d3b886936ccea9c21f495755640dd) gist which walks you through how to flash a NodeMCU using the Arduino IDE. The `.ino` file referred to is the `NodeMCU-Lock.ino` file included in this repository
+1. First, follow [this](https://gist.github.com/Tommrodrigues/8d9d3b886936ccea9c21f495755640dd) gist which walks you through how to flash a NodeMCU using the Arduino IDE. The `.ino` file referred to is the `NodeMCU-Lock.ino` file included in this repository. When doing this, you should change the username and password, and insert your own SSL certificates.
 
 2. Assuming that you already have [homebridge](https://github.com/nfarina/homebridge#installation) set up, the next thing you will have to do is install the plugin:
 ```
@@ -28,10 +28,10 @@ npm install -g homebridge-http-lock-mechanism
     {
        "accessory": "HTTPLock",
        "name": "Garage",
-       "openURL": "http://lock.local/NjWymLQzyd3PPp9N",
-       "closeURL": "http://lock.local/f3gZbxREJYFKRmz6",
-       "polling": true,
-       "statusURL": "http://lock.local/status"
+       "apiroute": "https://lock.local",
+       "username": "admin",
+       "password": "esp8266",
+       "polling": true
      }
 ]
 ```
@@ -39,7 +39,3 @@ npm install -g homebridge-http-lock-mechanism
 ## Wiring
 
 ![Diagram](https://i.ibb.co/Jrzr2Hm/68747470733a2f2f696d6167652e6962622e636f2f68454468464c2f576972696e672d52656c61792d4469616772616d2e6a7067.jpg)
-
-## Note
-
-This example script will open any time your `key` is requested. Therefore, anyone on your network who knows the key can activate the script. Acquiring the key is trivial once inside your network by running a simple Wireshark scan. As such, the 'security' of this script **relies entirely on your network security** (e.g. the strength of your Wi-Fi password).
