@@ -27,7 +27,6 @@ function HTTPLock (log, config) {
   this.timeout = config.timeout || 3000
   this.http_method = config.http_method || 'GET'
 
-  this.polling = config.polling || false
   this.pollInterval = config.pollInterval || 120
 
   if (this.username != null && this.password != null) {
@@ -120,16 +119,11 @@ HTTPLock.prototype = {
       .getCharacteristic(Characteristic.LockTargetState)
       .on('set', this.setLockTargetState.bind(this))
 
-    if (this.polling) {
-      this._getStatus(function () {})
+    this._getStatus(function () {})
 
-      setInterval(function () {
-        this._getStatus(function () {})
-      }.bind(this), this.pollInterval * 1000)
-    } else {
-      this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(1)
-      this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(1)
-    }
+    setInterval(function () {
+      this._getStatus(function () {})
+    }.bind(this), this.pollInterval * 1000)
 
     return [this.informationService, this.service]
   }
