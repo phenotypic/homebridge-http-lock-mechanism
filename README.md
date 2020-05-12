@@ -46,9 +46,7 @@ Find script samples for the lock in the _examples_ folder.
 | --- | --- | --- |
 | `autoLock` _(optional)_ | Whether your lock should re-lock after being opened | `false` |
 | `autoLockDelay` _(optional)_ | Time (in seconds) until your lock will auto lock if enabled | `10` |
-| `polling` | Whether the state should be polled at intervals | `false` |
 | `pollInterval` | Time (in seconds) between device polls (if `polling` is enabled) | `120` |
-| `statusURL` | URL to retrieve state on poll (should return `0` or `1`) | N/A |
 
 ### Additional options
 | Key | Description | Default |
