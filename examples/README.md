@@ -30,8 +30,7 @@ npm install -g homebridge-http-lock-mechanism
        "name": "Garage",
        "apiroute": "https://lock.local",
        "username": "admin",
-       "password": "esp8266",
-       "polling": true
+       "password": "esp8266"
      }
 ]
 ```
