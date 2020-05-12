@@ -29,8 +29,7 @@ Find script samples for the lock in the _examples_ folder.
      {
        "accessory": "HTTPLock",
        "name": "Lock",
-       "openURL": "http://myurl.com/open",
-       "closeURL": "http://myurl.com/close"
+       "apiroute": "http://myurl.com"
      }
 ]
 ```
