@@ -14,7 +14,7 @@ This script interfaces with [homebridge](https://github.com/nfarina/homebridge) 
 
 ## How-to
 
-1. First, follow [this](https://gist.github.com/Tommrodrigues/8d9d3b886936ccea9c21f495755640dd) gist which walks you through how to flash a NodeMCU using the Arduino IDE. The `.ino` file referred to is the `NodeMCU-Lock.ino` file included in this repository. When doing this, you should change the username and password, and insert your own SSL certificates.
+1. First, install the `ArduinoJson` library from the _Library manager_ in the Arduino IDE, then follow [this](https://gist.github.com/Tommrodrigues/8d9d3b886936ccea9c21f495755640dd) gist which walks you through how to flash a NodeMCU using the Arduino IDE. The `.ino` file referred to is the `NodeMCU-Lock.ino` file included in this repository. When doing this, you should change the username and password, and insert your own SSL certificates.
 
 2. Assuming that you already have [homebridge](https://github.com/nfarina/homebridge#installation) set up, the next thing you will have to do is install the plugin:
 ```
