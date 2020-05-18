@@ -1,6 +1,6 @@
 {
   "name": "homebridge-http-lock-mechanism",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Homebridge plugin for a simple web-based lock",
   "main": "index.js",
   "engines": {
