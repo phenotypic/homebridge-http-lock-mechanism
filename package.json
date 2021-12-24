@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tommrodrigues/homebridge-http-lock-mechanism.git"
+    "url": "git+https://github.com/phenotypic/homebridge-http-lock-mechanism.git"
   },
   "keywords": [
     "homebridge-plugin"
   ],
-  "author": "Tom Rodrigues",
+  "author": "phenotypic",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tommrodrigues/homebridge-http-lock-mechanism/issues"
+    "url": "https://github.com/phenotypic/homebridge-http-lock-mechanism/issues"
   },
-  "homepage": "https://github.com/Tommrodrigues/homebridge-http-lock-mechanism#readme"
+  "homepage": "https://github.com/phenotypic/homebridge-http-lock-mechanism#readme"
 }
