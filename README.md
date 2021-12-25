@@ -12,13 +12,13 @@
 
 ## Description
 
-This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-based locking device to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests, the plugin allows you to lock/unlock the device. **Please look at [homebridge-web-lock](https://github.com/phenotypic/homebridge-web-lock) if you want a plugin that allows for real-time status updates.**
+This [homebridge](https://github.com/homebridge/homebridge) plugin exposes a web-based locking device to Apple's [HomeKit](http://www.apple.com/ios/home/). Using simple HTTP requests, the plugin allows you to lock/unlock the device. **Please look at [homebridge-web-lock](https://github.com/phenotypic/homebridge-web-lock) if you want a plugin that allows for real-time status updates.**
 
 Find script samples for the lock in the _examples_ folder.
 
 ## Installation
 
-1. Install [homebridge](https://github.com/nfarina/homebridge#installation-details)
+1. Install [homebridge](https://github.com/homebridge/homebridge#installation)
 2. Install this plugin: `npm install -g homebridge-http-lock-mechanism`
 3. Update your `config.json` file
 
