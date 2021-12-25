@@ -4,10 +4,6 @@
 #include <ESP8266mDNS.h>
 #include <ArduinoJson.h>
 
-// GitHub Page = https://github.com/phenotypic/homebridge-http-lock-mechanism
-
-// Script Type = Relay Momentary
-
 // D7 = Relay
 
 /////////////////// CHANGE THESE VALUES //////////////////////
@@ -18,17 +14,18 @@ const char* www_password = "esp8266";
 const String relay = "HIGH"; // Relay type (`HIGH` or `LOW`)
 const char* mdns = "lock"; // mDNS name
 const int momentaryOn = 1000; // Delay time for the on state (ms)
-//////////////////////////////////////////////////////////////
 
-// The certificate is stored in PMEM
+// Generate your own certificates and paste them below:
+// x509.h
 static const uint8_t x509[] PROGMEM = {
 
 };
 
-// And so is the key.  These could also be in DRAM
+// key.h
 static const uint8_t rsakey[] PROGMEM = {
 
 };
+//////////////////////////////////////////////////////////////
 
 const int relayPin = 13;
 
