@@ -1,4 +1,4 @@
-var Service, Characteristic
+let Service, Characteristic
 const packageJson = require('./package.json')
 const request = require('request')
 
@@ -61,7 +61,7 @@ HTTPLock.prototype = {
   },
 
   _getStatus: function (callback) {
-    var url = this.apiroute + '/status'
+    const url = this.apiroute + '/status'
     this.log.debug('Getting status: %s', url)
 
     this._httpRequest(url, '', 'GET', function (error, response, responseBody) {
@@ -72,7 +72,7 @@ HTTPLock.prototype = {
       } else {
         this.log.debug('Device response: %s', responseBody)
         try {
-          var json = JSON.parse(responseBody)
+          const json = JSON.parse(responseBody)
           this.service.getCharacteristic(Characteristic.LockCurrentState).updateValue(json.currentState)
           this.service.getCharacteristic(Characteristic.LockTargetState).updateValue(json.currentState)
           this.log.debug('Updated state to: %s', json.currentState)
@@ -85,7 +85,7 @@ HTTPLock.prototype = {
   },
 
   setLockTargetState: function (value, callback) {
-    var url = this.apiroute + '/setState?value=' + value
+    const url = this.apiroute + '/setState?value=' + value
     this.log.debug('Setting state: %s', url)
 
     this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
