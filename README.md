@@ -44,21 +44,21 @@ Find script samples for the lock in the _examples_ folder.
 ### Optional fields
 | Key | Description | Default |
 | --- | --- | --- |
-| `autoLock` _(optional)_ | Whether your lock should re-lock after being opened | `false` |
-| `autoLockDelay` _(optional)_ | Time (in seconds) until your lock will auto lock if enabled | `10` |
+| `autoLock` | Whether your lock should re-lock after being opened | `false` |
+| `autoLockDelay` | Time (in seconds) until your lock will auto lock if enabled | `10` |
 | `pollInterval` | Time (in seconds) between device polls (if `polling` is enabled) | `120` |
 
 ### Additional options
 | Key | Description | Default |
 | --- | --- | --- |
-| `timeout` _(optional)_ | Time (in milliseconds) until the accessory will be marked as _Not Responding_ if it is unreachable | `3000` |
-| `http_method` _(optional)_ | HTTP method used to communicate with the device | `GET` |
-| `username` _(optional)_ | Username if HTTP authentication is enabled | N/A |
-| `password` _(optional)_ | Password if HTTP authentication is enabled | N/A |
-| `model` _(optional)_ | Appears under the _Model_ field for the accessory | plugin |
-| `serial` _(optional)_ | Appears under the _Serial_ field for the accessory | apiroute |
-| `manufacturer` _(optional)_ | Appears under the _Manufacturer_ field for the accessory | author |
-| `firmware` _(optional)_ | Appears under the _Firmware_ field for the accessory | version |
+| `timeout` | Time (in milliseconds) until the accessory will be marked as _Not Responding_ if it is unreachable | `3000` |
+| `http_method` | HTTP method used to communicate with the device | `GET` |
+| `username` | Username if HTTP authentication is enabled | N/A |
+| `password` | Password if HTTP authentication is enabled | N/A |
+| `model` | Appears under the _Model_ field for the accessory | plugin |
+| `serial` | Appears under the _Serial_ field for the accessory | apiroute |
+| `manufacturer` | Appears under the _Manufacturer_ field for the accessory | author |
+| `firmware` | Appears under the _Firmware_ field for the accessory | version |
 
 ## API Interfacing
 
@@ -77,6 +77,7 @@ Your API should be able to:
 ```
 
 ## State key
+
 | State | Description |
 | --- | --- |
 | `0` | Open |
